@@ -14,6 +14,11 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        return new OpenAPI();
+        return new OpenAPI()
+                .info(
+                        new Info()
+                                .title("SWAGGER DEMO")
+                                .contact(new Contact().name("MadBrains").email("email@gmail.com"))
+                                .description("Spring boot project for Swagger demonstration"));
     }
 }

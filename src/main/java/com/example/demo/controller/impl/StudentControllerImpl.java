@@ -52,7 +52,7 @@ public class StudentControllerImpl implements StudentController{
     }
 
     @Override
-    public ResponseEntity<Response> addNewStudent(Request request) {
+    public ResponseEntity<Response> addNewStudent(Request request) throws Exception{
 
         Student student = conversionService.convert(request, Student.class);
 

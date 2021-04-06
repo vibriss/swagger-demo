@@ -17,9 +17,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Sql(scripts = "/prepare_test_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class StudentControllerImplTest {
 
     @Autowired
@@ -33,12 +38,18 @@ public class StudentControllerImplTest {
     @Test
     @Order(1)
     void givenRequest_whenAddNewStudent_thanReturnStudent() throws Exception {
-
+            mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(request)))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
     @Order(2)
     void givenNothing_whenGetAllStudents_thanReturnStatus204() throws Exception {
+        mvc.perform(get("/students"))
+                .andExpect(status().isNoContent());
 
     }
 }

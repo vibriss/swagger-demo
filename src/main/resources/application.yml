@@ -16,8 +16,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   output:
     ansi:
-      enabled: ALWAYS #разноцветные буковки в консоли
-
-springdoc:
-  swagger-ui:
-    operationsSorter: method  #сортировка вывода методов контроллера
+      enabled: ALWAYS
